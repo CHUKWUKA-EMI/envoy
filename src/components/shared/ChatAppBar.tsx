@@ -8,7 +8,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { styled } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { setMobileView, resetSelectedUser } from "../../state/chatsReducer";
-import { IUser } from "../../interfaces/User";
+import { IFriend } from "../../interfaces/User";
 
 const BoxWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -17,7 +17,7 @@ const BoxWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: "inherit",
 }));
 
-type User = IUser;
+type User = IFriend;
 interface IChatAppBarProps {
   user: User;
 }
@@ -53,12 +53,14 @@ const ChatAppBar: FunctionComponent = () => {
           //   padding: "1em",
         }}
       >
-        <Hidden smUp>
-          <IconButton onClick={resetActiveChat}>
-            <ArrowBackIcon sx={{ color: "#1874a5" }} />
-          </IconButton>
-        </Hidden>
-        {selectedUser && <SelectedUserComponent user={selectedUser} />}
+        <div style={{ display: "flex" }}>
+          <Hidden smUp>
+            <IconButton onClick={resetActiveChat}>
+              <ArrowBackIcon sx={{ color: "#1874a5" }} />
+            </IconButton>
+          </Hidden>
+          {selectedUser && <SelectedUserComponent user={selectedUser} />}
+        </div>
         <ForumIcon sx={{ color: "#1874a5", width: "1.5em", height: "1.5em" }} />
       </Toolbar>
     </AppBar>

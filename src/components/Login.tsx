@@ -15,6 +15,7 @@ import VisibilityPasswordTextField from "./shared/VisibilityPasswordTextField";
 import { _signIn } from "../services/network";
 import { useAppDispatch } from "../state/hooks";
 import { loginUser } from "../state/loginReducer";
+import { Socket } from "socket.io-client";
 
 const useStyles = makeStyles((theme) => ({
   forgotPassword: {
@@ -51,7 +52,11 @@ interface ILoginResponse {
   };
 }
 
-function LoginDialog() {
+interface ILoginProps {
+  socket: Socket;
+}
+
+function LoginDialog({ socket }: ILoginProps) {
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const location = useLocation();
@@ -90,7 +95,7 @@ function LoginDialog() {
         imageUrl: data.user.imageUrl,
         imagekit_id: data.user.imagekit_id,
       };
-
+      socket.emit("addUser", { userId: payload.id });
       await dispatch(loginUser(payload));
       setStatus({ error: false, success: true, message: "Login successful" });
       setIsLoading(false);

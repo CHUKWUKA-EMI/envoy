@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IChat } from "../interfaces/Chat";
-import { IUser } from "../interfaces/User";
+import { IFriend } from "../interfaces/User";
 
 type ChatType = IChat;
-type User = IUser;
+type User = IFriend;
 interface InitialState {
   chats: ChatType[];
   selectedUser: null | User;
@@ -20,7 +20,7 @@ export const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    selectUser: (state, { payload }: PayloadAction<IUser>) => {
+    selectUser: (state, { payload }: PayloadAction<IFriend>) => {
       state.selectedUser = payload;
     },
     resetSelectedUser: (state) => {
@@ -34,6 +34,10 @@ export const chatSlice = createSlice({
       state.chats = payload;
     },
 
+    resetChats: (state) => {
+      state.chats = [];
+    },
+
     addChat: (state, { payload }: PayloadAction<ChatType>) => {
       state.chats.push(payload);
     },
@@ -45,6 +49,7 @@ export const {
   selectUser,
   setMobileView,
   setChats,
+  resetChats,
   addChat,
   resetSelectedUser,
 } = chatSlice.actions;
